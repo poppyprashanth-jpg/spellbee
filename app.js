@@ -472,9 +472,7 @@ function setupStudy() {
     ui.studyFeedback.className = `quiz-feedback ${correct ? "is-good" : "is-bad"}`;
     ui.studyWord.textContent = state.currentStudyWord;
     if (ui.studySplash) {
-      ui.studySplash.textContent = state.currentStudyWord;
-      ui.studySplash.classList.add("is-showing");
-      setTimeout(() => ui.studySplash.classList.remove("is-showing"), 900);
+      showSplash(ui.studySplash, state.currentStudyWord, false);
     }
     if (correct) {
       const daily = getDailyGoalCount();
@@ -551,6 +549,20 @@ function countSyllables(word) {
   if (!cleaned) return 1;
   const matches = cleaned.match(/[aeiouy]+/g);
   return matches ? matches.length : 1;
+}
+
+function showSplash(target, text, isWrong) {
+  if (!target) return;
+  target.textContent = text;
+  target.classList.toggle("is-wrong", !!isWrong);
+  target.classList.add("is-showing");
+  const dismiss = () => {
+    target.classList.remove("is-showing");
+    document.removeEventListener("click", dismiss, true);
+    document.removeEventListener("keydown", dismiss, true);
+  };
+  document.addEventListener("click", dismiss, true);
+  document.addEventListener("keydown", dismiss, true);
 }
 
 function setupTest() {
@@ -774,10 +786,7 @@ function submitTestAnswer() {
     : `Not quite. The correct spelling is “${word}.”`;
   ui.testFeedback.className = `quiz-feedback ${correct ? "is-good" : "is-bad"}`;
   if (ui.testSplash) {
-    ui.testSplash.textContent = word;
-    ui.testSplash.classList.toggle("is-wrong", !correct);
-    ui.testSplash.classList.add("is-showing");
-    setTimeout(() => ui.testSplash.classList.remove("is-showing"), 900);
+    showSplash(ui.testSplash, word, !correct);
   }
   state.testCurrentIndex += 1;
   state.testSession.currentIndex = state.testCurrentIndex;

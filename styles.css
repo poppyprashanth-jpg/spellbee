@@ -373,8 +373,13 @@ button.ghost {
 
 .word-card .word-title {
   font-family: "Schoolbell", cursive;
-  font-size: 2rem;
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 700;
   margin-bottom: 8px;
+  color: #1b1a17;
+  text-shadow:
+    2px 2px 0 #f2b441,
+    4px 4px 0 rgba(0, 0, 0, 0.12);
 }
 
 .meta {
