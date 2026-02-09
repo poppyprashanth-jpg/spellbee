@@ -31,47 +31,43 @@
 
       <nav class="modes" aria-label="Mode selector">
         <a class="mode-link" href="practice.html">Practice</a>
-        <a class="mode-link" href="practice2.html">Practice 2</a>
-        <a class="mode-link" href="progress.html" class="mode-link is-active">Progress</a>
+        <a class="mode-link" href="practice2.html" class="mode-link is-active">Practice 2</a>
+        <a class="mode-link" href="progress.html">Progress</a>
         <a class="mode-link" href="settings.html">Settings</a>
       </nav>
 
       <main class="panel" id="panel">
-        <section class="panel-section" id="progress">
-          <div class="panel-header">
-            <div>
-              <h2>Progress Tracking</h2>
-              <p>Your practice history and mastery stats.</p>
+        
+          <div class="panel-section" id="mode-test">
+            <div class="panel-header">
+              <div>
+              <h2>Practice Mode 2</h2>
+              <p>Word is shown. Type the correct spelling.</p>
+              </div>
+              <div class="controls">
+                <select id="test2-level"></select>
+                <label class="toggle">
+                  <input type="checkbox" id="test2-school-only" />
+                  <span>School List Only</span>
+                </label>
+                <input id="test2-count" type="number" min="5" max="50" step="5" value="10" />
+              <button id="test2-start" class="ghost">Start Practice</button>
+              </div>
             </div>
-            <button id="progress-reset" class="ghost">Reset Progress</button>
+            <div class="card">
+              <div class="stat" id="test2-status"></div>
+            <div class="word-title" id="test2-word">WORD</div>
+              
+              <div class="input-row">
+                <input id="test2-input" type="text" placeholder="Type the word" />
+                <button id="test2-submit">Submit</button>
+              </div>
+              <div class="quiz-feedback" id="test2-feedback"></div>
+              <div class="stat" id="test2-timer"></div>
+            </div>
+            <div class="splash" id="test2-splash"></div>
           </div>
-          <div class="progress-grid">
-            <div class="card">
-              <h3>Overall</h3>
-              <div class="stat" id="stat-overall"></div>
-              <div class="stat" id="stat-studied"></div>
-            </div>
-            <div class="card">
-              <h3>By Level</h3>
-              <ul id="stat-levels" class="stat-list"></ul>
-            </div>
-            <div class="card">
-              <h3>Session Metrics</h3>
-              <div class="stat" id="stat-session"></div>
-              <div class="stat" id="stat-average-time"></div>
-              <div class="stat" id="stat-total-attempts"></div>
-              <div class="stat" id="stat-session-start"></div>
-            </div>
-            <div class="card">
-              <h3>Attempt Log (Recent)</h3>
-              <ul id="stat-attempts" class="stat-list"></ul>
-            </div>
-            <div class="card">
-              <h3>Words Missed</h3>
-              <ul id="stat-wrong-words" class="stat-list"></ul>
-            </div>
-          </div>
-        </section>
+
       </main>
     </div>    <script src="data/words.js"></script>
     <script src="app.js"></script>
