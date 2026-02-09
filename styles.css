@@ -85,6 +85,12 @@ body {
   font-size: 1.05rem;
 }
 
+.tagline {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
 .badge {
   width: 92px;
   height: 92px;
