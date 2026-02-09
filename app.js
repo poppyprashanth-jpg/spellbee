@@ -45,11 +45,6 @@ const ui = {
   testStatus: document.getElementById("test-status"),
   testTimer: document.getElementById("test-timer"),
   testSplash: document.getElementById("test-splash"),
-  nameModal: document.getElementById("name-modal"),
-  nameInput: document.getElementById("name-input"),
-  nameSubmit: document.getElementById("name-submit"),
-  welcomeModal: document.getElementById("welcome-modal"),
-  welcomeContinue: document.getElementById("welcome-continue"),
   progressReset: document.getElementById("progress-reset"),
   statOverall: document.getElementById("stat-overall"),
   statStudied: document.getElementById("stat-studied"),
@@ -609,20 +604,10 @@ function ensureProfile() {
     state.currentProfileId = current;
     return;
   }
-  if (!ui.nameModal || !ui.nameInput || !ui.nameSubmit || !ui.welcomeModal || !ui.welcomeContinue) return;
-  ui.welcomeModal.classList.add("is-open");
-  ui.welcomeContinue.addEventListener("click", () => {
-    ui.welcomeModal.classList.remove("is-open");
-    ui.nameModal.classList.add("is-open");
-  }, { once: true });
-  ui.nameSubmit.addEventListener("click", () => {
-    const name = ui.nameInput.value.trim() || "Player";
-    const profile = { id: `profile_${Date.now()}`, name };
-    profiles.push(profile);
-    saveProfiles(profiles);
-    setCurrentProfile(profile.id);
-    ui.nameModal.classList.remove("is-open");
-  }, { once: true });
+  const profile = { id: `profile_${Date.now()}`, name: "Player" };
+  profiles.push(profile);
+  saveProfiles(profiles);
+  setCurrentProfile(profile.id);
 }
 
 function renderProfiles() {
