@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Words of the Champions</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&family=Schoolbell&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <div>
+          <div class="title-row">
+            <img src="bee-black-gold-iowa.png" alt="Bee logo" class="logo" />
+            <div>
+              <p class="eyebrow">Words of the Champions</p>
+              <h1>Words of the Champions</h1>
+            </div>
+          </div>
+          <p class="subhead"></p>
+        </div>
+        <div class="badge">100</div>
+      </header>
+
+      <nav class="modes" aria-label="Mode selector">
+        <a class="mode-link" href="index.html">Study</a>
+        <a class="mode-link" href="test.html">Test</a>
+        <a class="mode-link is-active" href="progress.html">Progress</a>
+        <a class="mode-link" href="settings.html">Settings</a>
+      </nav>
+
+      <main class="panel" id="panel">
+        <section class="panel-section" id="progress">
+          <div class="panel-header">
+            <div>
+              <h2>Progress Tracking</h2>
+              <p>Your practice history and mastery stats.</p>
+            </div>
+            <button id="progress-reset" class="ghost">Reset Progress</button>
+          </div>
+          <div class="progress-grid">
+            <div class="card">
+              <h3>Overall</h3>
+              <div class="stat" id="stat-overall"></div>
+              <div class="stat" id="stat-studied"></div>
+            </div>
+            <div class="card">
+              <h3>By Level</h3>
+              <ul id="stat-levels" class="stat-list"></ul>
+            </div>
+            <div class="card">
+              <h3>Session Metrics</h3>
+              <div class="stat" id="stat-session"></div>
+              <div class="stat" id="stat-average-time"></div>
+              <div class="stat" id="stat-total-attempts"></div>
+              <div class="stat" id="stat-session-start"></div>
+            </div>
+            <div class="card">
+              <h3>Attempt Log (Recent)</h3>
+              <ul id="stat-attempts" class="stat-list"></ul>
+            </div>
+            <div class="card">
+              <h3>Words Missed</h3>
+              <ul id="stat-wrong-words" class="stat-list"></ul>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="data/words.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
