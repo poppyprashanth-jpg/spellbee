@@ -476,6 +476,40 @@ button.ghost {
   color: #c65a3a;
 }
 
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 16, 14, 0.35);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9998;
+}
+
+.modal.is-open {
+  display: flex;
+}
+
+.modal-card {
+  background: #fff7ea;
+  border: 2px dashed rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  padding: 24px;
+  width: min(360px, 90vw);
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.modal-card h2 {
+  font-family: "Schoolbell", cursive;
+  margin: 0 0 8px;
+}
+
+.modal-card input {
+  width: 100%;
+  margin: 12px 0;
+}
+
 @keyframes splash {
   0% { transform: scale(0.9); opacity: 0; }
   60% { transform: scale(1.05); opacity: 1; }

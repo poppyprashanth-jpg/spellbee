@@ -44,6 +44,9 @@ const ui = {
   testStatus: document.getElementById("test-status"),
   testTimer: document.getElementById("test-timer"),
   testSplash: document.getElementById("test-splash"),
+  nameModal: document.getElementById("name-modal"),
+  nameInput: document.getElementById("name-input"),
+  nameSubmit: document.getElementById("name-submit"),
   progressReset: document.getElementById("progress-reset"),
   statOverall: document.getElementById("stat-overall"),
   statStudied: document.getElementById("stat-studied"),
@@ -601,11 +604,16 @@ function ensureProfile() {
     state.currentProfileId = current;
     return;
   }
-  const name = window.prompt("Welcome! Enter your name to start:", "") || "Player";
-  const profile = { id: `profile_${Date.now()}`, name };
-  profiles.push(profile);
-  saveProfiles(profiles);
-  setCurrentProfile(profile.id);
+  if (!ui.nameModal || !ui.nameInput || !ui.nameSubmit) return;
+  ui.nameModal.classList.add("is-open");
+  ui.nameSubmit.addEventListener("click", () => {
+    const name = ui.nameInput.value.trim() || "Player";
+    const profile = { id: `profile_${Date.now()}`, name };
+    profiles.push(profile);
+    saveProfiles(profiles);
+    setCurrentProfile(profile.id);
+    ui.nameModal.classList.remove("is-open");
+  }, { once: true });
 }
 
 function renderProfiles() {
@@ -668,7 +676,7 @@ function populateVoices() {
   const current = ui.ttsVoice.value;
   const voices = speechSynthesis
     .getVoices()
-    .filter((voice) => voice.lang && voice.lang.toLowerCase().startsWith("en-us"));
+    .filter((voice) => voice.lang && voice.lang.toLowerCase().startsWith("en"));
   ui.ttsVoice.innerHTML = '<option value=\"\">Default voice</option>';
   voices.forEach((voice) => {
     const option = document.createElement("option");
