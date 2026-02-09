@@ -32,6 +32,7 @@ const ui = {
   studyFeedback: document.getElementById("study-feedback"),
   studyGoalText: document.getElementById("study-goal-text"),
   studyGoalFill: document.getElementById("study-goal-fill"),
+  studySplash: document.getElementById("study-splash"),
   testLevel: document.getElementById("test-level"),
   testSchoolOnly: document.getElementById("test-school-only"),
   testCount: document.getElementById("test-count"),
@@ -42,6 +43,7 @@ const ui = {
   testFeedback: document.getElementById("test-feedback"),
   testStatus: document.getElementById("test-status"),
   testTimer: document.getElementById("test-timer"),
+  testSplash: document.getElementById("test-splash"),
   progressReset: document.getElementById("progress-reset"),
   statOverall: document.getElementById("stat-overall"),
   statStudied: document.getElementById("stat-studied"),
@@ -465,8 +467,11 @@ function setupStudy() {
       ? "Correct!"
       : `Not quite. The correct spelling is “${state.currentStudyWord}.”`;
     ui.studyFeedback.className = `quiz-feedback ${correct ? "is-good" : "is-bad"}`;
-    if (!correct) {
-      ui.studyWord.textContent = state.currentStudyWord;
+    ui.studyWord.textContent = state.currentStudyWord;
+    if (ui.studySplash) {
+      ui.studySplash.textContent = state.currentStudyWord;
+      ui.studySplash.classList.add("is-showing");
+      setTimeout(() => ui.studySplash.classList.remove("is-showing"), 900);
     }
     if (correct) {
       const daily = getDailyGoalCount();
@@ -752,6 +757,12 @@ function submitTestAnswer() {
     ? "Correct!"
     : `Not quite. The correct spelling is “${word}.”`;
   ui.testFeedback.className = `quiz-feedback ${correct ? "is-good" : "is-bad"}`;
+  if (ui.testSplash) {
+    ui.testSplash.textContent = word;
+    ui.testSplash.classList.toggle("is-wrong", !correct);
+    ui.testSplash.classList.add("is-showing");
+    setTimeout(() => ui.testSplash.classList.remove("is-showing"), 900);
+  }
   state.testCurrentIndex += 1;
   state.testSession.currentIndex = state.testCurrentIndex;
   state.testStartedAt = Date.now();

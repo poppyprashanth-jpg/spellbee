@@ -451,6 +451,37 @@ button.ghost {
   color: #c65a3a;
 }
 
+.splash {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Schoolbell", cursive;
+  font-size: clamp(3rem, 8vw, 7rem);
+  color: #231f20;
+  background: rgba(255, 244, 218, 0.92);
+  backdrop-filter: blur(2px);
+  z-index: 9999;
+}
+
+.splash.is-showing {
+  display: flex;
+  animation: splash 600ms ease;
+}
+
+.splash.is-wrong {
+  background: rgba(255, 220, 220, 0.95);
+  color: #c65a3a;
+}
+
+@keyframes splash {
+  0% { transform: scale(0.9); opacity: 0; }
+  60% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 .input-row {
   display: flex;
   gap: 12px;
