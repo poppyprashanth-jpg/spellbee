@@ -56,6 +56,10 @@
               <div class="stat" id="test-status"></div>
               <div class="actions">
                 <button id="test-audio">Listen Word</button>
+                <label class="toggle">
+                  <input type="checkbox" id="test-slow" />
+                  <span>Slow</span>
+                </label>
               </div>
               <div class="input-row">
                 <input id="test-input" type="text" placeholder="Type the word" />
@@ -76,6 +80,14 @@
         <p>Tell us your name to save your progress.</p>
         <input id="name-input" type="text" placeholder="Your name" />
         <button id="name-submit">Start</button>
+      </div>
+    </div>
+
+    <div class="modal" id="welcome-modal">
+      <div class="modal-card">
+        <h2>Welcome to Words of the Champions!</h2>
+        <p>Get ready to practice your spelling skills.</p>
+        <button id="welcome-continue">Continue</button>
       </div>
     </div>
 

@@ -38,6 +38,7 @@ const ui = {
   testCount: document.getElementById("test-count"),
   testStart: document.getElementById("test-start"),
   testAudio: document.getElementById("test-audio"),
+  testSlow: document.getElementById("test-slow"),
   testInput: document.getElementById("test-input"),
   testSubmit: document.getElementById("test-submit"),
   testFeedback: document.getElementById("test-feedback"),
@@ -47,6 +48,8 @@ const ui = {
   nameModal: document.getElementById("name-modal"),
   nameInput: document.getElementById("name-input"),
   nameSubmit: document.getElementById("name-submit"),
+  welcomeModal: document.getElementById("welcome-modal"),
+  welcomeContinue: document.getElementById("welcome-continue"),
   progressReset: document.getElementById("progress-reset"),
   statOverall: document.getElementById("stat-overall"),
   statStudied: document.getElementById("stat-studied"),
@@ -396,8 +399,10 @@ async function playAudioFor(word) {
   const voices = speechSynthesis.getVoices();
   const selected = voices.find((voice) => voice.name === settings.ttsVoice);
   if (selected) utterance.voice = selected;
-  const slow = ui.studySlow && ui.studySlow.checked ? 0.75 : settings.ttsSpeed;
-  utterance.rate = slow;
+  let rate = settings.ttsSpeed;
+  if (ui.studySlow && ui.studySlow.checked) rate = 0.75;
+  if (ui.testSlow && ui.testSlow.checked) rate = 0.7;
+  utterance.rate = rate;
   speechSynthesis.cancel();
   speechSynthesis.speak(utterance);
   return true;
@@ -604,8 +609,12 @@ function ensureProfile() {
     state.currentProfileId = current;
     return;
   }
-  if (!ui.nameModal || !ui.nameInput || !ui.nameSubmit) return;
-  ui.nameModal.classList.add("is-open");
+  if (!ui.nameModal || !ui.nameInput || !ui.nameSubmit || !ui.welcomeModal || !ui.welcomeContinue) return;
+  ui.welcomeModal.classList.add("is-open");
+  ui.welcomeContinue.addEventListener("click", () => {
+    ui.welcomeModal.classList.remove("is-open");
+    ui.nameModal.classList.add("is-open");
+  }, { once: true });
   ui.nameSubmit.addEventListener("click", () => {
     const name = ui.nameInput.value.trim() || "Player";
     const profile = { id: `profile_${Date.now()}`, name };
