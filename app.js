@@ -594,6 +594,20 @@ function setCurrentProfile(id) {
   renderProgress();
 }
 
+function ensureProfile() {
+  const profiles = getProfiles();
+  let current = localStorage.getItem("spellbeeCurrentProfile");
+  if (current && profiles.find((p) => p.id === current)) {
+    state.currentProfileId = current;
+    return;
+  }
+  const name = window.prompt("Welcome! Enter your name to start:", "") || "Player";
+  const profile = { id: `profile_${Date.now()}`, name };
+  profiles.push(profile);
+  saveProfiles(profiles);
+  setCurrentProfile(profile.id);
+}
+
 function renderProfiles() {
   if (!ui.profileSelect) return;
   const profiles = getProfiles();
@@ -781,6 +795,7 @@ function submitTestAnswer() {
 }
 
 async function init() {
+  ensureProfile();
   setupProfiles();
   state.sessionId = `sess_${Date.now()}_${Math.floor(Math.random() * 10000)}`;
   state.sessionStartedAt = Date.now();
