@@ -45,17 +45,6 @@ const ui = {
   testStatus: document.getElementById("test-status"),
   testTimer: document.getElementById("test-timer"),
   testSplash: document.getElementById("test-splash"),
-  test2Level: document.getElementById("test2-level"),
-  test2SchoolOnly: document.getElementById("test2-school-only"),
-  test2Count: document.getElementById("test2-count"),
-  test2Start: document.getElementById("test2-start"),
-  test2Input: document.getElementById("test2-input"),
-  test2Submit: document.getElementById("test2-submit"),
-  test2Feedback: document.getElementById("test2-feedback"),
-  test2Status: document.getElementById("test2-status"),
-  test2Timer: document.getElementById("test2-timer"),
-  test2Word: document.getElementById("test2-word"),
-  test2Splash: document.getElementById("test2-splash"),
   progressReset: document.getElementById("progress-reset"),
   statOverall: document.getElementById("stat-overall"),
   statStudied: document.getElementById("stat-studied"),
@@ -592,15 +581,6 @@ function setupTest() {
   });
 }
 
-function setupTest2() {
-  if (!ui.test2Level) return;
-  populateLevelSelect(ui.test2Level);
-  ui.test2Start.addEventListener("click", startTest2);
-  ui.test2Submit.addEventListener("click", submitTest2Answer);
-  ui.test2Input.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") submitTest2Answer();
-  });
-}
 
 function setupProgress() {
   ui.progressReset.addEventListener("click", () => {
@@ -776,78 +756,8 @@ function startTest() {
   if (word) playAudioFor(word);
 }
 
-function startTest2() {
-  const level = ui.test2Level.value;
-  if (!level) return;
-  const schoolOnly = ui.test2SchoolOnly.checked;
-  const count = Math.max(5, Math.min(50, Number(ui.test2Count.value) || 10));
-  const pool = getLevelWords(level, schoolOnly);
-  let used = getUsedTestWords(`practice2-${level}`, schoolOnly);
-  let available = pool.filter((word) => !used.has(word));
-  if (available.length < count) {
-    used = new Set();
-    available = [...pool];
-  }
-  const items = shuffle(available).slice(0, count);
-  items.forEach((word) => used.add(word));
-  setUsedTestWords(`practice2-${level}`, schoolOnly, used);
-  state.testSession = {
-    id: `practice2_${Date.now()}`,
-    startedAt: Date.now(),
-    currentIndex: 0,
-    total: items.length,
-    correct: 0,
-    wrong: 0,
-    items,
-    completed: false,
-  };
-  state.testCurrentIndex = 0;
-  state.testStartedAt = Date.now();
-  renderTest2Status();
-}
 
-function renderTest2Status() {
-  if (!state.testSession || !ui.test2Status) return;
-  const idx = state.testCurrentIndex + 1;
-  ui.test2Status.textContent = `Question ${idx} of ${state.testSession.total} · Correct ${state.testSession.correct} / Wrong ${state.testSession.wrong}`;
-  const elapsed = Date.now() - state.testSession.startedAt;
-  ui.test2Timer.textContent = `Elapsed: ${Math.floor(elapsed / 1000)}s`;
-  const word = state.testSession.items[state.testCurrentIndex];
-  ui.test2Word.textContent = word || "";
-  ui.test2Input.value = "";
-  ui.test2Feedback.textContent = "";
-  ui.test2Feedback.className = "quiz-feedback";
-}
 
-function submitTest2Answer() {
-  if (!state.testSession) return;
-  const word = state.testSession.items[state.testCurrentIndex];
-  if (!word) return;
-  const guess = normalize(ui.test2Input.value);
-  const answer = normalize(word);
-  const correct = guess === answer;
-  const durationMs = state.testStartedAt ? Date.now() - state.testStartedAt : null;
-  recordAttemptExtended(word, correct, "practice2", durationMs);
-  if (correct) state.testSession.correct += 1;
-  else state.testSession.wrong += 1;
-  ui.test2Feedback.textContent = correct
-    ? "Correct!"
-    : `Not quite. The correct spelling is “${word}.”`;
-  ui.test2Feedback.className = `quiz-feedback ${correct ? "is-good" : "is-bad"}`;
-  if (ui.test2Splash) {
-    showSplash(ui.test2Splash, word, !correct);
-  }
-  state.testCurrentIndex += 1;
-  state.testSession.currentIndex = state.testCurrentIndex;
-  state.testStartedAt = Date.now();
-  if (state.testCurrentIndex >= state.testSession.total) {
-    state.testSession.completed = true;
-    ui.test2Status.textContent = `Finished! Correct ${state.testSession.correct} / Wrong ${state.testSession.wrong}`;
-    ui.test2Timer.textContent = "";
-    return;
-  }
-  renderTest2Status();
-}
 
 function renderTestStatus() {
   if (!state.testSession) {
@@ -913,7 +823,6 @@ async function init() {
   setupModeSwitching();
   setupStudy();
   setupTest();
-  setupTest2();
   setupProgress();
   setupSettings();
   renderProgress();
